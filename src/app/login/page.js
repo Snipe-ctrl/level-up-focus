@@ -1,3 +1,5 @@
+// TEMPORARY LOGIN PLACEHOLDER 
+
 "use client";
 
 import { useState } from "react";
