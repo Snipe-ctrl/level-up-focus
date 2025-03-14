@@ -1,11 +1,36 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Button from "./ui/button";
 
 export default function Timer() {
+    const [timeLeft, setTimeLeft] = useState(10);
+    const [isRunning, setIsRunning] = useState(false)
 
-    const handleClick = () => {
-        alert("Button clicked!");
+    const handlePomodoroStart = () => {
+        const intervalId = setInterval(() => {
+            setSeconds(prevSeconds => prevSeconds - 1);
+        }, 1000);
+    };
+
+    const formatTime = (seconds) => {
+        const minutes = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+    };
+
+    useEffect(() => {
+        if (!isRunning || timeLeft <= 0) return;
+
+        const timer = setInterval(() => {
+            setTimeLeft((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, [isRunning, timeLeft]);
+
+    const handleStartPause= () => {
+        setIsRunning(!isRunning);
       };
 
     return (
@@ -17,19 +42,19 @@ export default function Timer() {
                         <h2 className="text-xl font-semibold text-white">Pomodoro Timer</h2>
                         <h3 className="text-sm text-white/70 mt-1">0 pomodoros completed</h3>
                     </div>
-                    <div className="text-6xl font-bold text-white my-8">25:00</div>
+                    <div className="text-6xl font-bold text-white my-8">{formatTime(timeLeft)}</div>
                     <div className="w-full h-3 bg-white/20 rounded-full overflow-hidden">
                         <div className="w-[40%] h-full bg-white/60 rounded-full transition-all duration-1000"></div>
                     </div>
                     <div className="flex justify-center gap-4 mt-6">
                         <Button
                             className="bg-white hover:bg-white/90 text-gray-800 border border-white/50"
-                            onClick={handleClick}
+                            onClick={handleStartPause}
                         >
-                            Start
+                            {!isRunning ? 'Start' : 'Pause'}
                         </Button>
-                        <Button onClick={handleClick} disabled={true}>Reset</Button>
-                        <Button onClick={handleClick}>Settings</Button>
+                        <Button disabled={true}>Reset</Button>
+                        <Button>Settings</Button>
                     </div>
                 </div>
             </div>
