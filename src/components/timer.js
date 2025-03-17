@@ -23,15 +23,27 @@ export default function Timer() {
         if (!isRunning || timeLeft <= 0) return;
 
         const timer = setInterval(() => {
-            setTimeLeft((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
+            setTimeLeft((prevTime) => {
+                if (prevTime > 1) {
+                    return prevTime - 1;
+                } else {
+                    setIsRunning(false);
+                    return 0;
+                }
+            });
         }, 1000);
-
+        
         return () => clearInterval(timer);
     }, [isRunning, timeLeft]);
-
-    const handleStartPause= () => {
+    
+    const handleStartPause = () => {
         setIsRunning(!isRunning);
       };
+
+    const handleReset = () => {
+        setTimeLeft(10);
+        setIsRunning(false);
+    };
 
     return (
         <div className="flex items-center justify-center h-screen bg-blue-500">
@@ -48,12 +60,11 @@ export default function Timer() {
                     </div>
                     <div className="flex justify-center gap-4 mt-6">
                         <Button
-                            className="bg-white hover:bg-white/90 text-gray-800 border border-white/50"
                             onClick={handleStartPause}
                         >
                             {!isRunning ? 'Start' : 'Pause'}
                         </Button>
-                        <Button disabled={true}>Reset</Button>
+                        <Button onClick={handleReset}>Reset</Button>
                         <Button>Settings</Button>
                     </div>
                 </div>
