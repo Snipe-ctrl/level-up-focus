@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Settings } from "lucide-react";
 import Button from "./ui/button";
 
 export default function Timer() {
@@ -65,7 +66,13 @@ export default function Timer() {
                             {!isRunning ? 'Start' : 'Pause'}
                         </Button>
                         <Button onClick={handleReset}>Reset</Button>
-                        <Button>Settings</Button>
+                        <Button 
+                            className=""
+                            variant="ghost"
+                            size="icon"
+                        >
+                            <Settings className="h-5 w-5"/>
+                        </Button>
                     </div>
                 </div>
             </div>
