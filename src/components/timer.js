@@ -3,11 +3,14 @@
 import { useEffect, useState } from "react";
 import { Settings } from "lucide-react";
 import Button from "./ui/button";
+import SettingsModal from "./settings-modal";
 
 export default function Timer() {
     const [timeLeft, setTimeLeft] = useState(60 * 25);
     const [isRunning, setIsRunning] = useState(false);
     const [currentPhase, setCurrentPhase] = useState("work");
+
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
     const [timerSettings, setTimerSettings] = useState({
         workDuration: 25,
@@ -65,6 +68,12 @@ export default function Timer() {
 
     return (
         <div className="flex items-center justify-center h-screen bg-blue-500">
+            {isSettingsOpen && (
+                <SettingsModal 
+                    isOpen={isSettingsOpen}
+                    onClose={() => setIsSettingsOpen(false)}
+                />
+            )}
             <div className="w-[90%] max-w-md">
                 <div className="w-full backdrop-blur-lg bg-white/20 rounded-2xl 
                 shadow-xl p-8 border border-white/30 flex flex-col items-center justify-center">
@@ -88,7 +97,10 @@ export default function Timer() {
                             variant="ghost"
                             size="icon"
                         >
-                            <Settings className="h-5 w-5"/>
+                            <Settings
+                                className="h-5 w-5"
+                                onClick={() => setIsSettingsOpen(true)}
+                            />
                         </Button>
                     </div>
                 </div>

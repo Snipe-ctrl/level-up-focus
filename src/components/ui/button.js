@@ -15,13 +15,16 @@ const Button = ({
     disabled:pointer-events-none disabled:opacity-50`;
 
     const variants = {
-        primary: "bg-white hover:bg-white/90 text-gray-800 border border-white/50",
-        ghost: "hover:text-gray-900 hover:bg-gray-100/20",
+        primary: "bg-white hover:bg-white/80 text-gray-800 border border-white/50",
+        blue: "bg-blue-600 hover:bg-blue-700 text-white",
+        ghost: "text-white hover:text-gray-900 hover:bg-gray-100/20",
     };
 
     const sizes = {
-        icon: "h-10 w-10",
+        default: "h-10 px-4 py-2",
+        sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
+        icon: "h-10 w-10",
     };
 
     return (

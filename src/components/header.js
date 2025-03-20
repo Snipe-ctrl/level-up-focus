@@ -7,7 +7,7 @@ export default function Header() {
     }
 
     return (
-        <div className="fixed top-0 left-0 w-full flex justify-between z-50 items-center p-4 bg-transparent">
+        <div className="fixed top-0 left-0 w-full flex justify-between z-20 items-center p-4 bg-transparent">
             <button
                 onClick={toggleSidebar}
                 className="p-2 rounded-lg bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors cursor-pointer">
