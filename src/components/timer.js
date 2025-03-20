@@ -53,6 +53,16 @@ export default function Timer() {
         
         return () => clearInterval(timer);
     }, [isRunning, timeLeft]);
+
+    useEffect(() => {
+        if (!isRunning) {
+            if (currentPhase === "work") {
+                setTimeLeft(timerSettings.workDuration * 60);
+            } else if (currentPhase === "break") {
+                setTimeLeft(timerSettings.breakDuration * 60);
+            }
+        }
+    }, [timerSettings, currentPhase, isRunning])
     
     const handleStartPause = () => {
         setIsRunning(!isRunning);

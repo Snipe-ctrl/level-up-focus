@@ -9,9 +9,13 @@ export default function SettingsModal({ isOpen, onClose, onSave, settings }) {
     const [timerSettings, setTimerSettings] = useState(settings);
 
     const handleInputChange = (field, value) => {
+
+        const parsedValue = parseInt(value) || 0;
+        const limitedValue = Math.min(parsedValue, 60);
+
         setTimerSettings({
             ...timerSettings,
-            [field]: parseInt(value) || 0
+            [field]: limitedValue
         });
     };
 
@@ -55,8 +59,10 @@ export default function SettingsModal({ isOpen, onClose, onSave, settings }) {
                 <div className='grid gap-4 py-4'>
                     <div className='grid grid-cols-4 items-center gap-4'>
                         <label className='text-sm font-medium leading-none text-right'>Work</label>
-                        <input 
-                            type="number" 
+                        <input
+                            max="60"
+                            min="0"
+                            type="number"
                             className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
                             col-span-2 focus:border-blue-400 outline-0'
                             value={timerSettings.workDuration}
@@ -66,7 +72,9 @@ export default function SettingsModal({ isOpen, onClose, onSave, settings }) {
                     </div>
                     <div className='grid grid-cols-4 items-center gap-4'>
                         <label className='text-sm font-medium leading-none text-right'>Short Break</label>
-                        <input 
+                        <input
+                            max="60"
+                            min="0"
                             type="number" 
                             className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
                             col-span-2 focus:border-blue-400 outline-0'
@@ -77,7 +85,9 @@ export default function SettingsModal({ isOpen, onClose, onSave, settings }) {
                     </div>
                     <div className='grid grid-cols-4 items-center gap-4'>
                         <label className='text-sm font-medium leading-none text-right'>Long Break</label>
-                        <input 
+                        <input
+                            max="60"
+                            min="0"
                             type="number" 
                             className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
                             col-span-2 focus:border-blue-400 outline-0'
@@ -88,7 +98,9 @@ export default function SettingsModal({ isOpen, onClose, onSave, settings }) {
                     </div>
                     <div className='grid grid-cols-4 items-center gap-4'>
                         <label className='text-sm font-medium leading-none text-right'>Long Break After</label>
-                        <input 
+                        <input
+                            max="60"
+                            min="0"
                             type="number" 
                             className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
                             col-span-2 focus:border-blue-400 outline-0'
