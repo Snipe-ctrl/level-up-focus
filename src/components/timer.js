@@ -16,6 +16,7 @@ export default function Timer() {
         workDuration: 25,
         breakDuration: 5,
         longBreakDuration: 15,
+        longBreakInterval: 4,
     });
 
     const formatTime = (seconds) => {
@@ -72,6 +73,8 @@ export default function Timer() {
                 <SettingsModal 
                     isOpen={isSettingsOpen}
                     onClose={() => setIsSettingsOpen(false)}
+                    onSave={(newSettings) => setTimerSettings(newSettings)}
+                    settings={timerSettings}
                 />
             )}
             <div className="w-[90%] max-w-md">
@@ -96,10 +99,10 @@ export default function Timer() {
                             className=""
                             variant="ghost"
                             size="icon"
+                            onClick={() => setIsSettingsOpen(true)}
                         >
                             <Settings
                                 className="h-5 w-5"
-                                onClick={() => setIsSettingsOpen(true)}
                             />
                         </Button>
                     </div>

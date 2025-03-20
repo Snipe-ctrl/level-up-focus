@@ -4,7 +4,21 @@ import { X } from 'lucide-react';
 import Button from './ui/button';
 import { useEffect, useState } from 'react';
 
-export default function SettingsModal({ isOpen, onClose }) {
+export default function SettingsModal({ isOpen, onClose, onSave, settings }) {
+
+    const [timerSettings, setTimerSettings] = useState(settings);
+
+    const handleInputChange = (field, value) => {
+        setTimerSettings({
+            ...timerSettings,
+            [field]: parseInt(value) || 0
+        });
+    };
+
+    const handleSave = () => {
+        onSave(timerSettings);
+        onClose();
+    }
 
     useEffect(() => {
         const handleEscape = (e) => {
@@ -41,34 +55,60 @@ export default function SettingsModal({ isOpen, onClose }) {
                 <div className='grid gap-4 py-4'>
                     <div className='grid grid-cols-4 items-center gap-4'>
                         <label className='text-sm font-medium leading-none text-right'>Work</label>
-                        <input type="number" className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
-                        col-span-2 focus:border-blue-400 outline-0'></input>
+                        <input 
+                            type="number" 
+                            className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
+                            col-span-2 focus:border-blue-400 outline-0'
+                            value={timerSettings.workDuration}
+                            onChange={(e) => handleInputChange('workDuration', e.target.value)}
+                        />
                         <h4 className='text-sm text-muted-foreground'>minutes</h4>
                     </div>
                     <div className='grid grid-cols-4 items-center gap-4'>
                         <label className='text-sm font-medium leading-none text-right'>Short Break</label>
-                        <input type="number" className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
-                        col-span-2 focus:border-blue-400 outline-0'></input>
+                        <input 
+                            type="number" 
+                            className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
+                            col-span-2 focus:border-blue-400 outline-0'
+                            value={timerSettings.breakDuration}
+                            onChange={(e) => handleInputChange('breakDuration', e.target.value)}
+                        />
                         <h4 className='text-sm text-muted-foreground'>minutes</h4>
                     </div>
                     <div className='grid grid-cols-4 items-center gap-4'>
                         <label className='text-sm font-medium leading-none text-right'>Long Break</label>
-                        <input type="number" className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
-                        col-span-2 focus:border-blue-400 outline-0'></input>
+                        <input 
+                            type="number" 
+                            className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
+                            col-span-2 focus:border-blue-400 outline-0'
+                            value={timerSettings.longBreakDuration}
+                            onChange={(e) => handleInputChange('longBreakDuration', e.target.value)}
+                        />    
                         <h4 className='text-sm text-muted-foreground'>minutes</h4>
                     </div>
                     <div className='grid grid-cols-4 items-center gap-4'>
                         <label className='text-sm font-medium leading-none text-right'>Long Break After</label>
-                        <input type="number" className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
-                        col-span-2 focus:border-blue-400 outline-0'></input>
+                        <input 
+                            type="number" 
+                            className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
+                            col-span-2 focus:border-blue-400 outline-0'
+                            value={timerSettings.longBreakInterval}
+                            onChange={(e) => handleInputChange('longBreakInterval', e.target.value)}
+                        />
                         <h4 className='text-sm text-muted-foreground'>pomodoros</h4>
                     </div>
                 </div>
                 <div className='flex justify-end gap-4 w-full pt-6'>
-                    <Button variant='primary' size='default' onClick={onClose}>
-                        Cancel
-                    </Button>
-                    <Button variant='blue' size='default'>Save Changes</Button>
+                    <Button 
+                        variant='primary' 
+                        size='default' 
+                        onClick={onClose}>
+                        Cancel</Button>
+                    <Button 
+                        variant='blue' 
+                        size='default'
+                        onClick={handleSave}>
+                        Save Changes</Button>
                 </div>
             </div>
         </>
