@@ -5,20 +5,33 @@ import { Settings } from "lucide-react";
 import Button from "./ui/button";
 
 export default function Timer() {
-    const [timeLeft, setTimeLeft] = useState(10);
-    const [isRunning, setIsRunning] = useState(false)
+    const [timeLeft, setTimeLeft] = useState(60 * 25);
+    const [isRunning, setIsRunning] = useState(false);
+    const [currentPhase, setCurrentPhase] = useState("work");
 
-    const handlePomodoroStart = () => {
-        const intervalId = setInterval(() => {
-            setSeconds(prevSeconds => prevSeconds - 1);
-        }, 1000);
-    };
+    const [timerSettings, setTimerSettings] = useState({
+        workDuration: 25,
+        breakDuration: 5,
+        longBreakDuration: 15,
+    });
 
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
         const secs = seconds % 60;
         return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
     };
+
+    useEffect(() => {
+        if (timeLeft === 0) {
+            if (currentPhase === "work") {
+                setCurrentPhase("break");
+                setTimeLeft(timerSettings.breakDuration * 60);
+            } else if (currentPhase === "break") {
+                setTimeLeft(timerSettings.workDuration * 60);
+                setCurrentPhase("work");
+            }
+        }
+    }, [timeLeft])
 
     useEffect(() => {
         if (!isRunning || timeLeft <= 0) return;
@@ -42,7 +55,11 @@ export default function Timer() {
       };
 
     const handleReset = () => {
-        setTimeLeft(10);
+        if (currentPhase === "work") {
+            setTimeLeft(timerSettings.workDuration * 60);
+        } else if (currentPhase === "break") {
+            setTimeLeft(timerSettings.breakDuration * 60);
+        }
         setIsRunning(false);
     };
 
