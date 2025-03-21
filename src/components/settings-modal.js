@@ -25,18 +25,22 @@ export default function SettingsModal({ isOpen, onClose, onSave, settings }) {
     }
 
     useEffect(() => {
-        const handleEscape = (e) => {
-            if (e.key === 'Escape') onClose();
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                onClose();
+            } else if (e.key === 'Enter' && e.target.tagName !== 'INPUT') {
+                handleSave();
+            }
         };
 
         if (isOpen) {
-            document.addEventListener('keydown', handleEscape);
+            document.addEventListener('keydown', handleKeyDown);
         }
 
         return () => {
-            document.removeEventListener('keydown', handleEscape);
+            document.removeEventListener('keydown', handleKeyDown);
         };
-    }, [isOpen, onClose])
+    }, [isOpen, onClose, handleSave])
 
     return (
         <>
@@ -61,7 +65,7 @@ export default function SettingsModal({ isOpen, onClose, onSave, settings }) {
                         <label className='text-sm font-medium leading-none text-right'>Work</label>
                         <input
                             max="60"
-                            min="0"
+                            min="1"
                             type="number"
                             className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
                             col-span-2 focus:border-blue-400 outline-0'
@@ -100,7 +104,7 @@ export default function SettingsModal({ isOpen, onClose, onSave, settings }) {
                         <label className='text-sm font-medium leading-none text-right'>Long Break After</label>
                         <input
                             max="60"
-                            min="0"
+                            min="1"
                             type="number" 
                             className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
                             col-span-2 focus:border-blue-400 outline-0'

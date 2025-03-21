@@ -9,6 +9,7 @@ export default function Timer() {
     const [timeLeft, setTimeLeft] = useState(60 * 25);
     const [isRunning, setIsRunning] = useState(false);
     const [currentPhase, setCurrentPhase] = useState("work");
+    const [completedSessions, setCompletedSessions] = useState(0);
 
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
@@ -19,6 +20,21 @@ export default function Timer() {
         longBreakInterval: 4,
     });
 
+    const progressBar = () => {
+        let totalDuration;
+        if (currentPhase === "work") {
+            totalDuration = timerSettings.workDuration * 60;
+        } else if (currentPhase === "break") {
+            totalDuration = timerSettings.breakDuration * 60;
+        } else if (currentPhase === "longBreak") {
+            totalDuration = timerSettings.longBreakDuration * 60;
+        }
+
+        const percentageComplete = ((totalDuration - timeLeft) / totalDuration) * 100;
+
+        return `${Math.min(Math.max(percentageComplete, 0), 100)}%`;
+    }
+
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
         const secs = seconds % 60;
@@ -28,14 +44,22 @@ export default function Timer() {
     useEffect(() => {
         if (timeLeft === 0) {
             if (currentPhase === "work") {
-                setCurrentPhase("break");
-                setTimeLeft(timerSettings.breakDuration * 60);
-            } else if (currentPhase === "break") {
+                const newCompletedSessions = completedSessions + 1;
+                setCompletedSessions(newCompletedSessions)
+
+                if (newCompletedSessions % timerSettings.longBreakInterval === 0) {
+                    setCurrentPhase("longBreak");
+                    setTimeLeft(timerSettings.longBreakDuration * 60);
+                } else {
+                    setCurrentPhase("break");
+                    setTimeLeft(timerSettings.breakDuration * 60);
+                }
+            } else if (currentPhase === "break" || currentPhase === "longBreak") {
                 setTimeLeft(timerSettings.workDuration * 60);
                 setCurrentPhase("work");
             }
         }
-    }, [timeLeft])
+    }, [timeLeft, completedSessions, timerSettings]);
 
     useEffect(() => {
         if (!isRunning || timeLeft <= 0) return;
@@ -60,9 +84,11 @@ export default function Timer() {
                 setTimeLeft(timerSettings.workDuration * 60);
             } else if (currentPhase === "break") {
                 setTimeLeft(timerSettings.breakDuration * 60);
+            } else if (currentPhase === "longBreak") {
+                setTimeLeft(timerSettings.longBreakDuration * 60);
             }
         }
-    }, [timerSettings, currentPhase, isRunning])
+    }, [timerSettings, currentPhase])
     
     const handleStartPause = () => {
         setIsRunning(!isRunning);
@@ -73,7 +99,14 @@ export default function Timer() {
             setTimeLeft(timerSettings.workDuration * 60);
         } else if (currentPhase === "break") {
             setTimeLeft(timerSettings.breakDuration * 60);
+        } else if (currentPhase === "longBreak") {
+            setTimeLeft(timerSettings.longBreakDuration * 60);
         }
+        setIsRunning(false);
+    };
+
+    const handleSkip = () => {
+        setTimeLeft(0);
         setIsRunning(false);
     };
 
@@ -91,12 +124,15 @@ export default function Timer() {
                 <div className="w-full backdrop-blur-lg bg-white/20 rounded-2xl 
                 shadow-xl p-8 border border-white/30 flex flex-col items-center justify-center">
                     <div className="flex items-center flex-col">
-                        <h2 className="text-xl font-semibold text-white">Pomodoro Timer</h2>
-                        <h3 className="text-sm text-white/70 mt-1">0 pomodoros completed</h3>
+                        <h2 className="text-xl font-semibold text-white">{currentPhase === "work" ? 'Focus Period' : 'Breaktime'}</h2>
+                        <h3 className="text-sm text-white/70 mt-1">{completedSessions} pomodoros completed</h3>
                     </div>
                     <div className="text-6xl font-bold text-white my-8">{formatTime(timeLeft)}</div>
-                    <div className="w-full h-3 bg-white/20 rounded-full overflow-hidden">
-                        <div className="w-[40%] h-full bg-white/60 rounded-full transition-all duration-1000"></div>
+                    <div className="w-full h-3 bg-white/20 rounded-full shadow-inner overflow-hidden">
+                        <div 
+                            className="w-[40%] h-full bg-white/60 rounded-full transition-all duration-1000"
+                            style={{ width: progressBar() }}
+                        ></div>
                     </div>
                     <div className="flex justify-center gap-4 mt-6">
                         <Button
@@ -104,7 +140,11 @@ export default function Timer() {
                         >
                             {!isRunning ? 'Start' : 'Pause'}
                         </Button>
-                        <Button onClick={handleReset}>Reset</Button>
+                        <Button 
+                            onClick={currentPhase === 'work' ? handleReset : handleSkip}
+                        >
+                            {currentPhase === 'work' ? 'Reset' : 'Skip'}
+                        </Button>
                         <Button 
                             className=""
                             variant="ghost"
