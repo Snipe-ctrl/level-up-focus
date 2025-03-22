@@ -2,7 +2,6 @@ import { Inter } from "next/font/google"
 import { AuthProvider } from "@/context/AuthContext"
 import Header from "../components/header"
 import Timer from "../components/timer";
-import SettingsModal from "@/components/settings-modal";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] })

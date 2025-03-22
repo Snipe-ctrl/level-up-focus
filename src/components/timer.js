@@ -136,17 +136,18 @@ export default function Timer() {
                     </div>
                     <div className="flex justify-center gap-4 mt-6">
                         <Button
+                            className="text-gray-800"
                             onClick={handleStartPause}
                         >
                             {!isRunning ? 'Start' : 'Pause'}
                         </Button>
                         <Button 
+                            className="text-gray-800"
                             onClick={currentPhase === 'work' ? handleReset : handleSkip}
                         >
                             {currentPhase === 'work' ? 'Reset' : 'Skip'}
                         </Button>
                         <Button 
-                            className=""
                             variant="ghost"
                             size="icon"
                             onClick={() => setIsSettingsOpen(true)}

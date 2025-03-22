@@ -15,7 +15,7 @@ const Button = ({
     disabled:pointer-events-none disabled:opacity-50`;
 
     const variants = {
-        primary: "bg-white hover:bg-white/80 text-gray-800 border border-white/50",
+        primary: "bg-white hover:bg-white/80 border border-white/50",
         blue: "bg-blue-600 hover:bg-blue-700 text-white",
         ghost: "text-white hover:text-gray-900 hover:bg-gray-100/20",
     };
