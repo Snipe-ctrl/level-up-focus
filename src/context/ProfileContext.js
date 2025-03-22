@@ -1,16 +1,19 @@
-import { useState, useEffect } from 'react';
-import { useAuth } from '@/context/AuthContext';
-import { supabase } from '@/services/supabase';
+"use client";
 
-export function useUserProfile() {
+import { createContext, useContext, useState, useEffect } from "react";
+import { useAuth } from "./AuthContext";
+import { supabase } from "@/services/supabase";
+
+const ProfileContext = createContext();
+
+export function ProfileProvider({ children }) {
     const { user } = useAuth();
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // handles updating user profile
     const updateUserProfile = async (updates) => {
-        if (!user || !profile) return { error: 'No user profile found' };
+        if (!user || !profile) return { error: "No user profile found" };;
 
         try {
             const { data, error } = await supabase
@@ -29,7 +32,6 @@ export function useUserProfile() {
         }
     };
 
-    // fetches user profile on mount
     useEffect(() => {
         async function fetchUserProfile() {
             if (!user) {
@@ -37,14 +39,14 @@ export function useUserProfile() {
                 setLoading(false);
                 return;
             }
-                
+
             try {
-                setLoading(true)
+                setLoading(true);
                 const { data, error } = await supabase
-                    .from('user_profiles')
-                    .select('*')
-                    .eq('id', user.id)
-                    .single();
+                .from('user_profiles')
+                .select('*')
+                .eq('id', user.id)
+                .single();
 
                 if (error) throw error;
                 setProfile(data);
@@ -57,7 +59,15 @@ export function useUserProfile() {
         }
 
         fetchUserProfile();
-    }, [user])
+    }, [user]);
 
-    return { profile, loading, error, updateUserProfile };
+    return (
+        <ProfileContext.Provider value={{ profile, loading, error, updateUserProfile }}>
+            {children}
+        </ProfileContext.Provider>
+    );
+}
+
+export function useUserProfile() {
+    return useContext(ProfileContext);
 }

@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google"
 import { AuthProvider } from "@/context/AuthContext"
+import { ProfileProvider } from "@/context/ProfileContext";
 import Header from "../components/header"
 import Timer from "../components/timer";
 import "./globals.css";
@@ -16,9 +17,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider>
-          <Header />
-          <Timer />
-          {children}
+          <ProfileProvider>
+            <Header />
+            <Timer />
+            {children}
+          </ProfileProvider>
         </AuthProvider>
       </body>
     </html>

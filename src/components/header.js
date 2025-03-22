@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { useUserProfile } from "@/hooks/useUserProfile";
+import { useUserProfile } from "@/context/ProfileContext";
 import Button from "./ui/button";
 import { useEffect } from "react";
 
@@ -35,6 +35,10 @@ export default function Header() {
 
         return Math.min(Math.max(xpIntoLevel, 0), 100);
     };
+
+    useEffect(() => {
+
+    }, [profile]);
 
     return (
         <div className="fixed top-0 left-0 w-full flex justify-between z-20 items-center p-4 bg-transparent">

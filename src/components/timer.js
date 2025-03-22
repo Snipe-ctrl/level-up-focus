@@ -4,8 +4,12 @@ import { useEffect, useState } from "react";
 import { Settings } from "lucide-react";
 import Button from "./ui/button";
 import SettingsModal from "./settings-modal";
+import { useUserProfile } from "@/context/ProfileContext";
 
 export default function Timer() {
+
+    const { profile, updateUserProfile } = useUserProfile();
+
     const [timeLeft, setTimeLeft] = useState(60 * 25);
     const [isRunning, setIsRunning] = useState(false);
     const [currentPhase, setCurrentPhase] = useState("work");
@@ -20,6 +24,23 @@ export default function Timer() {
         longBreakInterval: 4,
     });
 
+    const xpRewards = {
+        workSession: 25,
+        fullCycle: 10,
+    };
+
+    const awardXpForSession = async () => {
+        if (!profile) return;
+
+        const xpToAward = xpRewards.workSession
+
+        await updateUserProfile({
+            xp: profile.xp + xpToAward,
+            pomos: profile.pomos + 1,
+        });
+    }
+
+    // handles progress bar completion
     const progressBar = () => {
         let totalDuration;
         if (currentPhase === "work") {
@@ -35,15 +56,20 @@ export default function Timer() {
         return `${Math.min(Math.max(percentageComplete, 0), 100)}%`;
     }
 
+    // handles time formatting
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
         const secs = seconds % 60;
         return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
     };
 
+    // sets next pomodoro phase
     useEffect(() => {
         if (timeLeft === 0) {
             if (currentPhase === "work") {
+
+                awardXpForSession();
+
                 const newCompletedSessions = completedSessions + 1;
                 setCompletedSessions(newCompletedSessions)
 
@@ -61,6 +87,7 @@ export default function Timer() {
         }
     }, [timeLeft, completedSessions, timerSettings]);
 
+    
     useEffect(() => {
         if (!isRunning || timeLeft <= 0) return;
 
