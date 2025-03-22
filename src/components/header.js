@@ -1,10 +1,11 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useUserProfile } from "@/context/ProfileContext";
+import { getTotalXPForNextLevel, calculateXpBarPercentage } from "@/util/xpCalculations";
 import Button from "./ui/button";
-import { useEffect } from "react";
 
 export default function Header() {
 
@@ -13,32 +14,6 @@ export default function Header() {
     // user states
     const { user } = useAuth();
     const { profile, loading } = useUserProfile();
-
-    // calculates xp needed to reach next level
-    function getTotalXPForNextLevel(level) {
-        const baseXP = 100;
-        const exponent = 1.5;
-        let totalXP = 0;
-      
-        for (let i = 1; i <= level; i++) {
-          totalXP += Math.floor(baseXP * Math.pow(i, exponent));
-        }
-      
-        return totalXP;
-      };
-      
-    // calculates percentage of progress bar filled
-    const xpBar = (currentXp, currentLevel) => {
-        const nextLevelXp = getTotalXPForNextLevel(currentLevel);
-
-        const xpIntoLevel = ((nextLevelXp - currentXp) / nextLevelXp) * 100;
-
-        return Math.min(Math.max(xpIntoLevel, 0), 100);
-    };
-
-    useEffect(() => {
-
-    }, [profile]);
 
     return (
         <div className="fixed top-0 left-0 w-full flex justify-between z-20 items-center p-4 bg-transparent">
@@ -74,7 +49,7 @@ export default function Header() {
                             <div
                                 className="h-full transition-all duration-1000"
                                 style={{
-                                    width: xpBar(profile.xp, profile.level),
+                                    width: calculateXpBarPercentage(profile.xp, profile.level),
                                     background: 'linear-gradient(to right, #8b5cf6,rgb(236, 72, 107))',
                                     backgroundSize: '200px 100%',
                                     backgroundPosition: '0 0'

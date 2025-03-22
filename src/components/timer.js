@@ -38,6 +38,14 @@ export default function Timer() {
             xp: profile.xp + xpToAward,
             pomos: profile.pomos + 1,
         });
+    };
+
+    const handleUserLevelUp = async () => {
+        if (!profile) return;
+
+        await updateUserProfile({
+            level: profile.level + 1
+        })
     }
 
     // handles progress bar completion
