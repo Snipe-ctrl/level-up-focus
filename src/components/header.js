@@ -9,12 +9,32 @@ import { useEffect } from "react";
 export default function Header() {
 
     const router = useRouter();
+
+    // user states
     const { user } = useAuth();
     const { profile, loading } = useUserProfile();
 
-    useEffect(() => {
-        console.log(profile)
-    })
+    // calculates xp needed to reach next level
+    function getTotalXPForNextLevel(level) {
+        const baseXP = 100;
+        const exponent = 1.5;
+        let totalXP = 0;
+      
+        for (let i = 1; i <= level; i++) {
+          totalXP += Math.floor(baseXP * Math.pow(i, exponent));
+        }
+      
+        return totalXP;
+      };
+      
+    // calculates percentage of progress bar filled
+    const xpBar = (currentXp, currentLevel) => {
+        const nextLevelXp = getTotalXPForNextLevel(currentLevel);
+
+        const xpIntoLevel = ((nextLevelXp - currentXp) / nextLevelXp) * 100;
+
+        return Math.min(Math.max(xpIntoLevel, 0), 100);
+    };
 
     return (
         <div className="fixed top-0 left-0 w-full flex justify-between z-20 items-center p-4 bg-transparent">
@@ -50,7 +70,7 @@ export default function Header() {
                             <div
                                 className="h-full transition-all duration-1000"
                                 style={{
-                                    width: '100%',
+                                    width: xpBar(profile.xp, profile.level),
                                     background: 'linear-gradient(to right, #8b5cf6,rgb(236, 72, 107))',
                                     backgroundSize: '200px 100%',
                                     backgroundPosition: '0 0'
@@ -59,7 +79,7 @@ export default function Header() {
                         </div>
                         <div className="flex justify-between items-center w-full text-xs text-white/80 py-1">
                             <p className="">{profile.pomos} Pomos</p>
-                            <p className="">340/500 XP</p>
+                            <p className="">{profile.xp}/{getTotalXPForNextLevel(profile.level)} XP</p>
                         </div>
                     </div>
                 ) : (
