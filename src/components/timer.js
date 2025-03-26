@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { Settings } from "lucide-react";
+import { useUserProfile } from "@/context/ProfileContext";
+import { checkLevelUp } from "@/util/xpCalculations";
 import Button from "./ui/button";
 import SettingsModal from "./settings-modal";
-import { useUserProfile } from "@/context/ProfileContext";
 
 export default function Timer() {
 
@@ -32,21 +33,17 @@ export default function Timer() {
     const awardXpForSession = async () => {
         if (!profile) return;
 
-        const xpToAward = xpRewards.workSession
+        const xpToAward = xpRewards.workSession;
+        const newTotalXp = profile.xp + xpToAward;
+
+        const { shouldLevelUp, newLevel } = checkLevelUp(newTotalXp, profile.level);
 
         await updateUserProfile({
-            xp: profile.xp + xpToAward,
+            xp: newTotalXp,
             pomos: profile.pomos + 1,
+            level: shouldLevelUp ? newLevel : profile.level,
         });
     };
-
-    const handleUserLevelUp = async () => {
-        if (!profile) return;
-
-        await updateUserProfile({
-            level: profile.level + 1
-        })
-    }
 
     // handles progress bar completion
     const progressBar = () => {
@@ -75,7 +72,6 @@ export default function Timer() {
     useEffect(() => {
         if (timeLeft === 0) {
             if (currentPhase === "work") {
-
                 awardXpForSession();
 
                 const newCompletedSessions = completedSessions + 1;

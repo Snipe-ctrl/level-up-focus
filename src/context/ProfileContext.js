@@ -8,7 +8,18 @@ const ProfileContext = createContext();
 
 export function ProfileProvider({ children }) {
     const { user } = useAuth();
-    const [profile, setProfile] = useState(null);
+    const [profile, setProfile] = useState(() => {
+        if (typeof window !== 'undefined') {
+            try {
+                const cached = localStorage.getItem('userProfile');
+                if (!cached) return null;
+                return JSON.parse(cached);
+            } catch (error) {
+                localStorage.removeItem('userProfile');
+                return null;
+            }
+        }
+    });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -25,6 +36,7 @@ export function ProfileProvider({ children }) {
 
             if (error) throw error;
             setProfile(data);
+            localStorage.setItem('userProfile', JSON.stringify(data));
             return { data };
         } catch (error) {
             console.error('Error updating profile:', error);
@@ -36,6 +48,7 @@ export function ProfileProvider({ children }) {
         async function fetchUserProfile() {
             if (!user) {
                 setProfile(null);
+                localStorage.removeItem('userProfile');
                 setLoading(false);
                 return;
             }
@@ -50,6 +63,7 @@ export function ProfileProvider({ children }) {
 
                 if (error) throw error;
                 setProfile(data);
+                localStorage.setItem('userProfile', JSON.stringify(data));
             } catch (error) {
                 console.error('Error fetching user profile:', error);
                 setError(error.message);
@@ -58,7 +72,9 @@ export function ProfileProvider({ children }) {
             }
         }
 
-        fetchUserProfile();
+        if (!profile || profile.id !== user?.id) {
+            fetchUserProfile();
+        }
     }, [user]);
 
     return (
