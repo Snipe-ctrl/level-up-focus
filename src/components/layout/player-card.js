@@ -5,9 +5,10 @@ import { useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useUserProfile } from "@/context/ProfileContext";
 import { getTotalXPForNextLevel, calculateXpBarPercentage } from "@/util/xpCalculations";
-import Button from "./ui/button";
+import Sidebar from "./sidebar";
+import Button from "../ui/button";
 
-export default function Header() {
+export default function PlayerCard({ isSidebarOpen, onSidebarToggle }) {
 
     const router = useRouter();
 
@@ -16,26 +17,7 @@ export default function Header() {
     const { profile, loading } = useUserProfile();
 
     return (
-        <div className="fixed top-0 left-0 w-full flex justify-between z-20 items-center p-4 bg-transparent">
-            <button
-                className="p-2 rounded-lg bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors cursor-pointer">
-                <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-white"
-            >
-                    <line x1="4" x2="20" y1="12" y2="12" />
-                    <line x1="4" x2="20" y1="6" y2="6" />
-                    <line x1="4" x2="20" y1="18" y2="18" />
-                </svg>
-            </button>
+        <div className="fixed top-0 left-0 flex justify-end w-full p-4 bg-transparent">
             {user ? (
                 loading ? (
                     ''

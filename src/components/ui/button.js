@@ -18,6 +18,7 @@ const Button = ({
         primary: "bg-white hover:bg-white/80 border border-white/50",
         blue: "bg-blue-600 hover:bg-blue-700 text-white",
         ghost: "text-white hover:text-gray-900 hover:bg-gray-100/20",
+        sidebar: "text-white rounded-lg bg-white/20 backdrop-blur-sm hover:bg-white/30"
     };
 
     const sizes = {

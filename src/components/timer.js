@@ -5,7 +5,7 @@ import { Settings } from "lucide-react";
 import { useUserProfile } from "@/context/ProfileContext";
 import { checkLevelUp } from "@/util/xpCalculations";
 import Button from "./ui/button";
-import SettingsModal from "./settings-modal";
+import SettingsModal from "./layout/settings-modal";
 
 export default function Timer() {
 
