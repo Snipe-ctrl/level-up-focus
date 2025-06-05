@@ -45,7 +45,7 @@ export default function SettingsModal({ isOpen, onClose, onSave, settings }) {
     return (
         <>
             <div
-                className='fixed inset-0 bg-black/50 backdrop-blur-sm z-20'
+                className='fixed inset-0 bg-black/60 z-20'
                 onClick={onClose}
             ></div>
             <div className="flex fixed items-center justify-center flex-col z-30 bg-white/90 p-6 max-w-md rounded-2xl">

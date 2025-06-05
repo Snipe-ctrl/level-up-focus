@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Settings } from "lucide-react";
+import { Settings, Images } from "lucide-react";
 import { useUserProfile } from "@/context/ProfileContext";
 import { checkLevelUp } from "@/util/xpCalculations";
-import Button from "./ui/button";
 import SettingsModal from "./layout/settings-modal";
+import ThemeModal from "./layout/theme-modal";
+import Button from "./ui/button";
 
 export default function Timer() {
 
@@ -17,6 +18,7 @@ export default function Timer() {
     const [completedSessions, setCompletedSessions] = useState(0);
 
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+    const [isThemeSettingsOpen, setIsThemeSettingsOpen] = useState(false);
 
     const [timerSettings, setTimerSettings] = useState({
         workDuration: 25,
@@ -142,13 +144,23 @@ export default function Timer() {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen bg-blue-500">
+        <div className="flex items-center justify-center h-screen bg-cover bg-center bg-no-repeat"
+            style={{
+                backgroundImage: "url('/background-images/japanese-garden.png')",
+                backgroundBlendMode: "overlay",
+            }}>
             {isSettingsOpen && (
                 <SettingsModal 
                     isOpen={isSettingsOpen}
                     onClose={() => setIsSettingsOpen(false)}
                     onSave={(newSettings) => setTimerSettings(newSettings)}
                     settings={timerSettings}
+                />
+            )}
+            {isThemeSettingsOpen && (
+                <ThemeModal 
+                    isOpen={isThemeSettingsOpen}
+                    onClose={() => setIsThemeSettingsOpen(false)}
                 />
             )}
             <div className="w-[90%] max-w-md">
@@ -184,6 +196,15 @@ export default function Timer() {
                             onClick={() => setIsSettingsOpen(true)}
                         >
                             <Settings
+                                className="h-5 w-5"
+                            />
+                        </Button>
+                        <Button 
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setIsThemeSettingsOpen(true)}
+                        >
+                            <Images
                                 className="h-5 w-5"
                             />
                         </Button>
