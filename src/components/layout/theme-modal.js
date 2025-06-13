@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { X, Check } from 'lucide-react';
+import { X, Check, Lock } from 'lucide-react';
 import Image from 'next/image';
 import { useUserProfile } from "@/context/ProfileContext";
 
 export default function ThemeModal({ onClose, isOpen }) {
     
-    const { profile, updateUserProfile } = useUserProfile();
+    const { profile, unlockedThemes, updateUserProfile } = useUserProfile();
 
     const themeOptions = {
         colors: [
@@ -46,6 +46,20 @@ export default function ThemeModal({ onClose, isOpen }) {
         ]
     }
 
+    const isUnlocked = (value) => unlockedThemes?.includes(value);
+
+    const handleThemeSelect = async (type, value) => {
+        if (!isUnlocked(value)) return ;
+        try {
+            await updateUserProfile({
+                ...profile,
+                theme: { type, value }
+            });
+        } catch (error) {
+            console.error('Error updating theme:', error);
+        }
+    };
+
     return (
         <>
             <div
@@ -80,23 +94,35 @@ export default function ThemeModal({ onClose, isOpen }) {
                         );
                     })}
                     {themeOptions.images.map((image, idx) => {
-                        const isSelected = profile?.theme?.type === "image" && 
-                        profile?.theme?.value === image.value;
+                        const isSelected = profile?.theme?.type === "image" && profile?.theme?.value === image.value;
+                        const unlocked = isUnlocked(image.value);
                         
                         return (
-                        <div key={idx} className={`w-full h-47 aspect-square relative hover:scale-105 duration-200 transition-transform cursor-pointer` }>
-                            <Image 
-                                className="rounded-lg object-cover cursor-popinter"
-                                src={image.value}
-                                alt={image.name}
-                                fill
-                            />
-                            {isSelected && (
-                                <div className="absolute top-1 right-1 bg-white rounded-full p-1 shadow">
-                                    <Check className="w-4 h-4"/>
-                                </div>
-                            )}
-                        </div>
+                            <div 
+                                key={idx}
+                                onClick={() => unlocked && handleThemeSelect('image', image.value)}
+                                className={`w-full h-47 aspect-square relative hover:scale-105 duration-200 transition-transform cursor-pointer ${!unlocked ? 'opacity-50' : ''}`}
+                            >
+                                <Image 
+                                    className="rounded-lg object-cover cursor-popinter"
+                                    src={image.value}
+                                    alt={image.name}
+                                    fill
+                                />
+                                {isSelected && (
+                                    <div className="absolute top-1 right-1 bg-white rounded-full p-1 shadow">
+                                        <Check className="w-4 h-4"/>
+                                    </div>
+                                )}
+                                {!unlocked && (
+                                    <>
+                                        <div className="absolute inset-0 bg-black/40 rounded-lg"></div>
+                                        <div className="absolute inset-0 flex items-center justify-center">
+                                            <Lock className="w-6 h-6 text-white drop-shadow-lg"/>
+                                        </div>
+                                    </>
+                                )}
+                            </div>
                         )
                     })}
                 </div>

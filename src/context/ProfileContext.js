@@ -20,6 +20,7 @@ export function ProfileProvider({ children }) {
             }
         }
     });
+    const [unlockedThemes, setUnlockedThemes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -44,6 +45,20 @@ export function ProfileProvider({ children }) {
         }
     };
 
+    const fetchUnlockedThemes = async (userId) => {
+        const { data, error } = await supabase
+            .from('user_themes')
+            .select('type, value')
+            .eq('user_id', userId);
+
+            if (error) {
+                console.error("Error fetching unlocked themes: ", error);
+                return;
+            }
+
+            setUnlockedThemes(data);
+    }
+
     useEffect(() => {
         async function fetchUserProfile() {
             if (!user) {
@@ -64,6 +79,7 @@ export function ProfileProvider({ children }) {
                 if (error) throw error;
                 setProfile(data);
                 localStorage.setItem('userProfile', JSON.stringify(data));
+                await fetchUnlockedThemes(user.id);
             } catch (error) {
                 console.error('Error fetching user profile:', error);
                 setError(error.message);
@@ -78,7 +94,7 @@ export function ProfileProvider({ children }) {
     }, [user]);
 
     return (
-        <ProfileContext.Provider value={{ profile, loading, error, updateUserProfile }}>
+        <ProfileContext.Provider value={{ profile, unlockedThemes, loading, error, updateUserProfile }}>
             {children}
         </ProfileContext.Provider>
     );
