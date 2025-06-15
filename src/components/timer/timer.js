@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import { Settings, Images } from "lucide-react";
 import { useUserProfile } from "@/context/ProfileContext";
 import { checkLevelUp } from "@/util/xpCalculations";
-import SettingsModal from "./layout/settings-modal";
-import ThemeModal from "./layout/theme-modal";
-import Button from "./ui/button";
+import TimerDisplay from "./timerDisplay";
+import SettingsModal from "../layout/settings-modal";
+import ThemeModal from "../layout/theme-modal";
+import Button from "../ui/button";
 
 export default function Timer() {
 
@@ -167,17 +168,13 @@ export default function Timer() {
             <div className="w-[90%] max-w-md">
                 <div className="w-full backdrop-blur-lg bg-white/20 rounded-2xl 
                 shadow-xl p-8 border border-white/30 flex flex-col items-center justify-center">
-                    <div className="flex items-center flex-col">
-                        <h2 className="text-xl font-semibold text-white">{currentPhase === "work" ? 'Focus Period' : 'Breaktime'}</h2>
-                        <h3 className="text-sm text-white/70 mt-1">{completedSessions} pomodoros completed</h3>
-                    </div>
-                    <div className="text-6xl font-bold text-white my-8">{formatTime(timeLeft)}</div>
-                    <div className="w-full h-3 bg-white/20 rounded-full shadow-inner overflow-hidden">
-                        <div 
-                            className="w-[40%] h-full bg-white/60 rounded-full transition-all duration-1000"
-                            style={{ width: progressBar() }}
-                        ></div>
-                    </div>
+                    <TimerDisplay
+                        timeLeft={timeLeft}
+                        progressBar={progressBar}
+                        currentPhase={currentPhase}
+                        completedSessions={completedSessions}
+                        formatTime={formatTime}
+                    />
                     <div className="flex justify-center gap-4 mt-6">
                         <Button
                             className="text-gray-800"
