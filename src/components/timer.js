@@ -10,7 +10,7 @@ import Button from "./ui/button";
 
 export default function Timer() {
 
-    const { profile, updateUserProfile } = useUserProfile();
+    const { profile, unlockedThemes, updateUserProfile } = useUserProfile();
 
     const [timeLeft, setTimeLeft] = useState(60 * 25);
     const [isRunning, setIsRunning] = useState(false);
@@ -144,10 +144,11 @@ export default function Timer() {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen bg-cover bg-center bg-no-repeat"
+        <div className={`flex items-center justify-center h-screen bg-cover bg-center bg-no-repeat ${profile?.theme?.type === 'color' ? profile.theme.value : 'bg-blue-500'}`}
             style={{
-                backgroundImage: "url('/background-images/japanese-garden.png')",
-                backgroundBlendMode: "overlay",
+                backgroundImage: profile?.theme?.type === 'image'
+                    ? `url('${profile.theme.value}')`
+                    : 'none',
             }}>
             {isSettingsOpen && (
                 <SettingsModal 

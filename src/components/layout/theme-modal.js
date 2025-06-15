@@ -46,10 +46,14 @@ export default function ThemeModal({ onClose, isOpen }) {
         ]
     }
 
-    const isUnlocked = (value) => unlockedThemes?.includes(value);
+    const isUnlocked = (value) => {
+        if (value.startsWith('bg-')) return true;
+
+        return unlockedThemes?.some(theme => theme.value === value);
+    }
 
     const handleThemeSelect = async (type, value) => {
-        if (!isUnlocked(value)) return ;
+        if (!isUnlocked(value)) return;
         try {
             await updateUserProfile({
                 ...profile,
@@ -83,6 +87,7 @@ export default function ThemeModal({ onClose, isOpen }) {
 
                         return (
                             <div key={idx} 
+                                onClick={() => handleThemeSelect('color', color.value)}
                                 className={`relative w-full h-47 aspect-square rounded-lg cursor-pointer hover:scale-105 duration-200 transition-transform ${color.value}` }
                             >
                             {isSelected && (
