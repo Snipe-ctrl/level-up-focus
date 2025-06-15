@@ -5,6 +5,7 @@ import { Settings, Images } from "lucide-react";
 import { useUserProfile } from "@/context/ProfileContext";
 import { checkLevelUp } from "@/util/xpCalculations";
 import TimerDisplay from "./timerDisplay";
+import TimerControls from "./timerControls";
 import SettingsModal from "../layout/settings-modal";
 import ThemeModal from "../layout/theme-modal";
 import Button from "../ui/button";
@@ -175,38 +176,15 @@ export default function Timer() {
                         completedSessions={completedSessions}
                         formatTime={formatTime}
                     />
-                    <div className="flex justify-center gap-4 mt-6">
-                        <Button
-                            className="text-gray-800"
-                            onClick={handleStartPause}
-                        >
-                            {!isRunning ? 'Start' : 'Pause'}
-                        </Button>
-                        <Button 
-                            className="text-gray-800"
-                            onClick={currentPhase === 'work' ? handleReset : handleSkip}
-                        >
-                            {currentPhase === 'work' ? 'Reset' : 'Skip'}
-                        </Button>
-                        <Button 
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => setIsSettingsOpen(true)}
-                        >
-                            <Settings
-                                className="h-5 w-5"
-                            />
-                        </Button>
-                        <Button 
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => setIsThemeSettingsOpen(true)}
-                        >
-                            <Images
-                                className="h-5 w-5"
-                            />
-                        </Button>
-                    </div>
+                    <TimerControls
+                        isRunning={isRunning}
+                        currentPhase={currentPhase}
+                        onStartPause={handleStartPause}
+                        onReset={handleReset}
+                        onSkip={handleSkip}
+                        onOpenSettings={() => setIsSettingsOpen(true)}
+                        onOpenThemeSettings={() => setIsThemeSettingsOpen(true)}
+                    />
                 </div>
             </div>
         </div>
