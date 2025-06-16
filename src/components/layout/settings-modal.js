@@ -2,7 +2,7 @@
 
 import { X } from 'lucide-react';
 import Button from '../ui/button';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 export default function SettingsModal({ isOpen, onClose, onSave, settings }) {
 
@@ -11,18 +11,17 @@ export default function SettingsModal({ isOpen, onClose, onSave, settings }) {
     const handleInputChange = (field, value) => {
 
         const parsedValue = parseInt(value) || 0;
-        const limitedValue = Math.min(parsedValue, 60);
 
         setTimerSettings({
             ...timerSettings,
-            [field]: limitedValue
+            [field]: parsedValue
         });
     };
 
-    const handleSave = () => {
+    const handleSave = useCallback(() => {
         onSave(timerSettings);
         onClose();
-    }
+    }, [onSave, onClose, timerSettings]);
 
     useEffect(() => {
         const handleKeyDown = (e) => {

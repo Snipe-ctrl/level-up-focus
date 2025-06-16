@@ -20,7 +20,7 @@ export default function PlayerCard({ isSidebarOpen, onSidebarToggle }) {
         <div className="fixed top-0 left-0 flex justify-end w-full p-4 bg-transparent">
             {user ? (
                 loading ? (
-                    ''
+                    null
                 ) : profile ? (
                     <div className="flex items-center justify-center flex-col md:flex cursor-pointer">
                         <div className="flex items-center justify-center gap-2 mb-1">

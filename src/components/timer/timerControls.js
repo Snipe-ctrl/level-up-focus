@@ -27,7 +27,7 @@ export default function TimerControls({
             <Button 
                 variant="ghost"
                 size="icon"
-                onClick={() => onOpenSettings(true)}
+                onClick={onOpenSettings}
             >
                 <Settings
                     className="h-5 w-5"
@@ -36,7 +36,7 @@ export default function TimerControls({
             <Button 
                 variant="ghost"
                 size="icon"
-                onClick={() => onOpenThemeSettings(true)}
+                onClick={onOpenThemeSettings}
             >
                 <Images
                     className="h-5 w-5"
