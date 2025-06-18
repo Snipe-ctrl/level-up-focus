@@ -1,7 +1,7 @@
 "use client";
 
 import { X } from 'lucide-react';
-import Button from '../ui/button';
+import Button from '../ui/Button';
 import { useEffect, useState, useCallback } from 'react';
 
 export default function SettingsModal({ isOpen, onClose, onSave, settings }) {

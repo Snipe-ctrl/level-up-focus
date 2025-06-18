@@ -1,7 +1,7 @@
 "use client";
 
 import { Home, Users, ShoppingBag, ChartPie } from "lucide-react";
-import Button from "../ui/button";
+import Button from "../ui/Button";
 
 export default function Sidebar({ isOpen }) {
 

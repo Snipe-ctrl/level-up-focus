@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { AuthProvider } from "@/context/AuthContext"
 import { ProfileProvider } from "@/context/ProfileContext";
-import PlayerCard from "./player-card"
-import Sidebar from "./sidebar";
-import Timer from "../timer/timer";
+import PlayerCard from "./PlayerCard"
+import Sidebar from "./Sidebar";
+import Timer from "../timer/Timer";
 
 export default function RootLayoutClient({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);

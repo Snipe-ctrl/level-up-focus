@@ -4,11 +4,12 @@ import { useEffect, useState } from "react";
 import { Settings, Images } from "lucide-react";
 import { useUserProfile } from "@/context/ProfileContext";
 import { checkLevelUp } from "@/util/xpCalculations";
-import TimerDisplay from "./timerDisplay";
-import TimerControls from "./timerControls";
-import SettingsModal from "../layout/settings-modal";
-import ThemeModal from "../layout/theme-modal";
-import Button from "../ui/button";
+import TimerDisplay from "./TimerDisplay";
+import TimerControls from "./TimerControls";
+import SettingsModal from "../layout/SettingsModal";
+import ThemeModal from "../layout/ThemeModal";
+import Button from "../ui/Button";
+import SessionCompleteModal from "../layout/SessionCompleteModal";
 
 export default function Timer() {
 
@@ -21,6 +22,7 @@ export default function Timer() {
 
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [isThemeSettingsOpen, setIsThemeSettingsOpen] = useState(false);
+    const [isSessionCompleteOpen, setIsSessionCompleteOpen] = useState(false);
 
     const [timerSettings, setTimerSettings] = useState({
         workDuration: 25,
@@ -164,6 +166,13 @@ export default function Timer() {
                 <ThemeModal 
                     isOpen={isThemeSettingsOpen}
                     onClose={() => setIsThemeSettingsOpen(false)}
+                />
+            )}
+            <Button onClick={() => setIsSessionCompleteOpen(true)}></Button>
+            {isSessionCompleteOpen && (
+                <SessionCompleteModal 
+                    isOpen={isSessionCompleteOpen}
+                    onClose={() => setIsSessionCompleteOpen(false)}
                 />
             )}
             <div className="w-[90%] max-w-md">

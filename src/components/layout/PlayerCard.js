@@ -5,8 +5,8 @@ import { useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useUserProfile } from "@/context/ProfileContext";
 import { getTotalXPForNextLevel, calculateXpBarPercentage } from "@/util/xpCalculations";
-import Sidebar from "./sidebar";
-import Button from "../ui/button";
+import Sidebar from "./Sidebar";
+import Button from "../ui/Button";
 
 export default function PlayerCard({ isSidebarOpen, onSidebarToggle }) {
 

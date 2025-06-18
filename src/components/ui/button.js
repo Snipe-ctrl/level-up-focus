@@ -11,14 +11,15 @@ const Button = ({
 }) => {
 
     const baseStyles = `inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background
-    transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
+    cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
     disabled:pointer-events-none disabled:opacity-50`;
 
     const variants = {
-        primary: "bg-white hover:bg-white/80 border border-white/50",
-        blue: "bg-blue-600 hover:bg-blue-700 text-white",
-        ghost: "text-white hover:text-gray-900 hover:bg-gray-100/20",
-        sidebar: "text-white rounded-lg bg-white/20 backdrop-blur-sm hover:bg-white/30"
+        primary: "bg-white hover:bg-white/80 border border-white/50 transition-colors",
+        blue: "bg-blue-600 hover:bg-blue-700 text-white transition-colors",
+        ghost: "text-white hover:text-gray-900 hover:bg-gray-100/20 transition-colors",
+        green: "text-white bg-gradient-to-r from-[#22c55e] to-[#059669] hover:brightness-90 hover:scale-102 transition-all",
+        sidebar: "text-white rounded-lg bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors"
     };
 
     const sizes = {
