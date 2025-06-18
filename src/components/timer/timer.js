@@ -10,6 +10,7 @@ import SettingsModal from "../layout/SettingsModal";
 import ThemeModal from "../layout/ThemeModal";
 import Button from "../ui/Button";
 import SessionCompleteModal from "../layout/SessionCompleteModal";
+import { TIMER_PHASES, XP_REWARDS, DEFAULT_TIMER_SETTINGS } from "@/constants/timer";
 
 export default function Timer() {
 
@@ -24,12 +25,7 @@ export default function Timer() {
     const [isThemeSettingsOpen, setIsThemeSettingsOpen] = useState(false);
     const [isSessionCompleteOpen, setIsSessionCompleteOpen] = useState(false);
 
-    const [timerSettings, setTimerSettings] = useState({
-        workDuration: 25,
-        breakDuration: 5,
-        longBreakDuration: 15,
-        longBreakInterval: 4,
-    });
+    const [timerSettings, setTimerSettings] = useState(DEFAULT_TIMER_SETTINGS);
 
     const xpRewards = {
         workSession: 25,
