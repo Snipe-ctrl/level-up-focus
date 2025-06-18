@@ -5,8 +5,7 @@ import { useUserProfile } from "@/context/ProfileContext";
 import { Trophy, Zap } from "lucide-react";
 import Button from "../ui/Button";
 import { getTotalXPForNextLevel, calculateXpBarPercentage } from "@/util/xpCalculations";
-import { AnimatePresence, motion, useMotionValue, useTransform, animate } from 'framer-motion';
-import { useEffect } from "react";
+import { AnimatePresence, motion } from 'framer-motion';
 
 const backdropVariants = {
   hidden: { opacity: 0 },
@@ -30,18 +29,6 @@ const modalVariants = {
 export default function SessionCompleteModal({ isOpen, onClose }) {
     const { user } = useAuth();
     const { profile, loading } = useUserProfile();
-
-    const count = useMotionValue(0);
-    const rounded = useTransform(count, (latest) => Math.round(latest));
-
-    useEffect(() => {
-        const animation = animate(25, {
-            duration: 1,
-            ease: "easeOut",
-        });
-
-        return animation.stop;
-    }, []);
 
     return (
         <AnimatePresence>
@@ -76,23 +63,10 @@ export default function SessionCompleteModal({ isOpen, onClose }) {
                             </div>
                             <h2 className="pt-6 font-bold text-3xl">Session Complete!</h2>
                             <h3 className="text-slate-500 text-lg pt-2">+1 Pomodoro</h3>
-                            <motion.div 
-                                className="flex items-center justify-center h-10 px-4 mt-4 gap-2 rounded-4xl bg-gradient-to-r from-[#22c55e] to-[#059669]"
-                                initial={{ opacity: 0, scale: 0.5 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{
-                                    duration: 0.5,
-                                    ease: "easeOut",
-                                    delay: 0.2
-                                }}
-                            >
+                            <div className="flex items-center justify-center h-10 px-4 mt-4 gap-2 rounded-4xl bg-gradient-to-r from-[#22c55e] to-[#059669]">
                                 <Zap className="text-white" size={20}/>
-                                <motion.h3 
-                                    className="text-white font-extrabold text-xl"
-                                >
-                                    +<motion.span>{rounded}</motion.span> XP
-                                </motion.h3>
-                            </motion.div>
+                                <h3 className="text-white font-extrabold text-xl">+25 XP</h3>
+                            </div>
                             <h4 className="text-sm text-slate-500 font-medium pt-10">Experience Points</h4>
                             {profile && (
                                 <div className="w-90 h-3 mt-2 bg-white/20 rounded-full shadow-inner overflow-hidden">
