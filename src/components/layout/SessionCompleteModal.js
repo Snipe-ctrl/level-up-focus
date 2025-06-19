@@ -35,7 +35,7 @@ export default function SessionCompleteModal({ isOpen, onClose }) {
     const rounded = useTransform(count, (latest) => Math.round(latest));
 
     useEffect(() => {
-        const animation = animate(25, {
+        const animation = animate(count, 25, {
             duration: 1,
             ease: "easeOut",
         });

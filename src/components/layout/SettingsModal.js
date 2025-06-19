@@ -10,7 +10,7 @@ export default function SettingsModal({ isOpen, onClose, onSave, settings }) {
 
     const handleInputChange = (field, value) => {
 
-        const parsedValue = parseInt(value) || 0;
+        const parsedValue = parseFloat(value) || 0;
 
         setTimerSettings({
             ...timerSettings,
@@ -64,7 +64,8 @@ export default function SettingsModal({ isOpen, onClose, onSave, settings }) {
                         <label className='text-sm font-medium leading-none text-right'>Work</label>
                         <input
                             max="60"
-                            min="1"
+                            min="0"
+                            step="0.1"
                             type="number"
                             className='flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm
                             col-span-2 focus:border-blue-400 outline-0'
