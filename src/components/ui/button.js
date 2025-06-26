@@ -18,7 +18,7 @@ const Button = ({
         primary: "bg-white hover:bg-white/80 border border-white/50 transition-colors",
         blue: "bg-blue-600 hover:bg-blue-700 text-white transition-colors",
         ghost: "text-white hover:text-gray-900 hover:bg-gray-100/20 transition-colors",
-        green: "text-white bg-gradient-to-r from-[#22c55e] to-[#059669] hover:brightness-90 hover:scale-102 transition-all",
+        green: "text-white bg-gradient-to-r from-[#3b9925] to-[#217118] hover:brightness-90 hover:scale-102 transition-all",
         sidebar: "text-white rounded-lg bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-colors"
     };
 

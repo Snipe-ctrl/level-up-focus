@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { AuthProvider } from "@/context/AuthContext"
 import { ProfileProvider } from "@/context/ProfileContext";
+import Timer from "../timer/Timer";
 import PlayerCard from "./PlayerCard"
 import Sidebar from "./Sidebar";
-import Timer from "../timer/Timer";
 
 export default function RootLayoutClient({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -21,7 +21,7 @@ export default function RootLayoutClient({ children }) {
           isOpen={isSidebarOpen} 
           onClose={() => setIsSidebarOpen(false)} 
         />
-        <Timer />
+        <Timer></Timer>
         {children}
       </ProfileProvider>
     </AuthProvider>

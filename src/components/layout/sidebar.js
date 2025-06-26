@@ -1,6 +1,6 @@
 "use client";
 
-import { Home, Users, ShoppingBag, ChartPie } from "lucide-react";
+import { Home, Users, ShoppingBag, ChartPie, Settings } from "lucide-react";
 import Button from "../ui/Button";
 
 export default function Sidebar({ isOpen }) {
@@ -20,6 +20,9 @@ export default function Sidebar({ isOpen }) {
                     </div>
                     <div className="hover:bg-white/30 w-full py-3 px-4 transition-all cursor-pointer">
                         <ChartPie />
+                    </div>
+                    <div className="hover:bg-white/30 w-full py-3 px-4 transition-all cursor-pointer">
+                        <Settings />
                     </div>
                 </div>
             </div>
