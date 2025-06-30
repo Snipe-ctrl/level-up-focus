@@ -21,7 +21,6 @@ export default function RootLayoutClient({ children }) {
           isOpen={isSidebarOpen} 
           onClose={() => setIsSidebarOpen(false)} 
         />
-        <Timer></Timer>
         {children}
       </ProfileProvider>
     </AuthProvider>
