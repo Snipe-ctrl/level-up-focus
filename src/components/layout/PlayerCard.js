@@ -22,7 +22,7 @@ export default function PlayerCard({ isSidebarOpen, onSidebarToggle }) {
                 loading ? (
                     null
                 ) : profile ? (
-                    <div className="flex items-center justify-center flex-col md:flex cursor-pointer">
+                    <div className="flex items-center justify-center flex-col md:flex px-3 py-1 cursor-pointer rounded-lg bg-white/20 backdrop-blur-sm border-1 border-white/30">
                         <div className="flex items-center justify-center gap-2 mb-1">
                             <h3 className="text-white font-semibold">{profile.username}</h3>
                             <p className="bg-white/20 text-white text-xs px-2 py-0.5 rounded-full">Lvl {profile.level}</p>
