@@ -13,10 +13,6 @@ export default function RootLayoutClient({ children }) {
   return (
     <AuthProvider>
       <ProfileProvider>
-        <PlayerCard
-          isSidebarOpen={isSidebarOpen}
-          onSidebarToggle={() => setIsSidebarOpen(!isSidebarOpen)}
-        />
         <Sidebar 
           isOpen={isSidebarOpen} 
           onClose={() => setIsSidebarOpen(false)} 
