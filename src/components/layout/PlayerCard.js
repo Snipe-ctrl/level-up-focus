@@ -17,7 +17,7 @@ export default function PlayerCard({ isSidebarOpen, onSidebarToggle }) {
     const { profile, loading } = useUserProfile();
 
     return (
-        <div className="fixed top-0 left-0 flex justify-end w-full p-4 bg-transparent">
+        <div className="fixed top-0 left-0 flex justify-end w-full p-4 bg-transparent" onClick={() => router.push('/profile')}>
             {user ? (
                 loading ? (
                     null
