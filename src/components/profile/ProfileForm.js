@@ -3,11 +3,22 @@
 import { useAuth } from "@/context/AuthContext";
 import { useUserProfile } from "@/context/ProfileContext";
 import { calculateXpBarPercentage, getTotalXPForNextLevel } from "@/util/xpCalculations";
-import { Tag, Timer, Clock, Zap } from "lucide-react";
+import { Award, User, LineChart, Trophy } from "lucide-react";
 
 export default function ProfileForm() {
     const { user } = useAuth();
     const { profile, loading } = useUserProfile();
+
+    const formatMemberSince = (timestamp) => {
+        if (!timestamp) return '';
+
+        return new Date(timestamp).toLocaleDateString('en-GB', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
+        });
+    };
+
 
     if (!user) {
         return null;
@@ -22,76 +33,132 @@ export default function ProfileForm() {
     }
 
     return (
-        <div className="flex justify-center bg-neutral-900 w-screen h-screen">
-            <div className="flex items-center justify-center flex-col w-240 p-8 rounded-2xl bg-neutral-800  h-fit mt-8">
-                <div className="w-30 h-30 rounded-full bg-white border-3 border-black"
+        <>
+            <div className="flex items-center flex-col w-full h-full bg-neutral-900">
+                <div className="fixed w-full h-50"
                     style={{
-                        backgroundImage: "url('/profile-icons/itachi.jpg')",
-                        backgroundSize: "100%",
+                        backgroundImage: `url(${profile?.theme?.value})`,
+                        backgroundSize: "cover",
                         backgroundRepeat: "no-repeat",
                         backgroundPosition: "center"
-                    }}
-                ></div>
-                <h2 className="text-white text-3xl font-bold mt-4">{profile?.username}</h2>
-                <div className="flex items-center justify-center gap-2 mt-2">
-                    <div className="flex items-center justify-center px-3 py-1 bg-gradient-to-r from-[#22c55e] to-[#059669] rounded-2xl">
-                        <a className="text-white text-sm">Lvl 3</a>
+                    }}>
+                </div>
+                <div className="flex flex-col justify-start w-[70%] p-5 bg-neutral-800 z-10 mt-35 rounded-lg border-neutral-500">
+                    <div className="flex justify-start mb-9">
+                        <div className="w-30 h-30 rounded-lg bg-white border-1 border-white"
+                            style={{
+                                backgroundImage: "url('/profile-icons/itachi.jpg')",
+                                backgroundSize: "100%",
+                                backgroundRepeat: "no-repeat",
+                                backgroundPosition: "center"
+                            }}>
+                        </div>
+                        <div className="flex justify-start flex-col px-3">
+                            <div className="flex justify-start items-center gap-2">
+                                <a className="text-gray-200 text-3xl font-bold">{profile?.username}</a>
+                                <div className="flex items-center justify-center px-2 bg-emerald-900 rounded-md h-6">
+                                    <a className="text-cyan-100 text-sm font-medium">Level {profile?.level}</a>
+                                </div>
+                            </div>
+                            <a className="text-gray-400 text-sm">Account created {formatMemberSince(profile?.created_at)}</a>
+                            <div className="flex flex-col justify-start">
+                                <div className="mt-2 flex">
+                                    <User className="text-gray-400 h-5 w-5"/>
+                                    <a className="ml-1 text-md text-gray-400 font-bold">Friends</a>
+                                </div>
+                                <a className="text-gray-100 font-bold text-2xl left-0">28</a>
+                            </div>
+                        </div>
                     </div>
-                    <div className="flex items-center justify-center px-3 py-1 border-1 border-white rounded-2xl gap-1.5">
-                        <Tag className="text-white h-4 w-4"/>
-                        <a className="text-white text-sm">Chopped</a>
+                    <div className="flex items-center justify-between w-full">
+                        <a className="text-white font-light text-sm">{profile?.xp} / {getTotalXPForNextLevel(profile?.level)} XP</a>
+                        <h4 className="text-white text-sm font-light">Level {profile?.level + 1}</h4>
+                    </div>
+                    <div className="w-full h-3 mt-2 bg-white/20 rounded-full shadow-inner overflow-hidden border-white">
+                        <div
+                            className="h-full transition-all duration-1000 rounded-2xl"
+                            style={{
+                                width: calculateXpBarPercentage(profile?.xp, profile?.level),
+                                background: 'linear-gradient(to right, #22c55e, #059669)',
+                                backgroundSize: '100% 100%',
+                                backgroundPosition: '0 0'
+                            }}
+                        ></div>
                     </div>
                 </div>
-                <div className="flex items-center justify-between w-150 mt-4">
-                    <a className="text-white font-light text-sm">XP Progress</a>
-                    <h4 className="text-white text-sm font-light">{profile?.xp} / {getTotalXPForNextLevel(profile?.level)} XP</h4>
+                <div className="flex justify-start items-center gap-1 mt-8 w-[70%]">
+                    <LineChart className="text-white"/>
+                    <a className="text-white text-2xl font-bold">Stats</a>
                 </div>
-                <div className="w-150 h-3 mt-2 bg-white/20 rounded-full shadow-inner overflow-hidden border-1 border-white">
-                    <div
-                        className="h-full transition-all duration-1000 rounded-2xl"
-                        style={{
-                            width: calculateXpBarPercentage(profile?.xp, profile?.level),
-                            background: 'linear-gradient(to right, #22c55e, #059669)',
-                            backgroundSize: '360px 100%',
-                            backgroundPosition: '0 0'
-                        }}
-                    ></div>
+                <div className="flex justify-between w-[70%] h-full mt-2">
+                    <div className="flex flex-col bg-neutral-800 w-[30%] h-fit rounded-lg p-4">
+                        <a className="text-2xl text-gray-400 font-bold">Total Pomodoros</a>
+                        <a className="text-2xl text-white font-medium">189</a>
+                    </div>
+                    <div className="flex flex-col bg-neutral-800 w-[30%] h-fit rounded-lg p-4">
+                        <a className="text-2xl text-gray-400 font-bold">Total Focus Time</a>
+                        <a className="text-2xl text-white font-medium">108H 22M</a>
+                    </div>
+                    <div className="flex flex-col bg-neutral-800 w-[30%] h-fit rounded-lg p-4">
+                        <a className="text-2xl text-gray-400 font-bold">Total XP</a>
+                        <a className="text-2xl text-white font-medium">21,890</a>
+                    </div>
                 </div>
-                <a className="text-white text-sm font-light mt-2">{getTotalXPForNextLevel(profile?.level) - profile?.xp} XP until Level {profile?.level}</a>
-                <div className="flex justify-between items-center w-full mt-4">
-                    <div className="flex items-center justify-center flex-col w-[30%] h-fit mt-8">
-                        {/* change to pomodoro icon */}
-                        <div className="relative flex align-items justify-center">
-                            <div
-                                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-pink-500 z-0"
-                            />
-                            <Timer className="z-10 text-white"/>
+                <div className="flex justify-start items-center gap-1 w-[70%] mt-8">
+                    <Award className="text-white"/>
+                    <a className="text-white text-2xl font-bold">Achievements</a>
+                </div>
+                <div className="grid grid-cols-6 gap-2 w-[70%] h-full mt-2 mb-16">
+                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-10 gap-4 justify-between items-center">
+                        <div className="flex-1 flex items-center justify-center">
+                            <Trophy className="text-2xl text-[#ffb31b] font-bold w-20 h-20"></Trophy>
                         </div>
-                        <a className="text-white text-3xl mt-5 font-bold">{profile?.pomos}</a>
-                        <a className="text-white text-lg font-medium">Total Pomos</a>
+                        <div className="h-12 flex items-center">
+                            <a className="text-2xl text-white font-bold text-center">First Crack</a>
+                        </div>
                     </div>
-                    <div className="flex items-center justify-center flex-col w-[30%] h-fit mt-8">
-                        <div className="relative flex align-items justify-center">
-                            <div
-                                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-blue-500 z-0"
-                            />
-                            <Clock className="z-10 text-white"/>
+                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-10 gap-4 justify-between items-center">
+                        <div className="flex-1 flex items-center justify-center">
+                            <Trophy className="text-2xl text-[#ffb31b] font-bold w-20 h-20"></Trophy>
                         </div>
-                        <a className="text-white text-3xl mt-5 font-bold">10.5</a>
-                        <a className="text-white text-lg font-medium">Focus Hours</a>
+                        <div className="h-12 flex items-center">
+                            <a className="text-2xl text-white font-bold text-center">Ripe Tomato</a>
+                        </div>
                     </div>
-                    <div className="flex items-center flex-col w-[30%] h-fit mt-8">
-                        <div className="relative flex align-items justify-center">
-                            <div
-                                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-green-500 z-0"
-                            />
-                            <Zap className="z-10 text-white"/>
+                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-10 gap-4 justify-between items-center">
+                        <div className="flex-1 flex items-center justify-center">
+                            <Trophy className="text-2xl text-[#ffb31b] font-bold w-20 h-20"></Trophy>
                         </div>
-                        <a className="text-white text-3xl mt-5 font-bold">{profile?.xp}</a>
-                        <a className="text-white text-lg font-medium">Weekly XP</a>
+                        <div className="h-12 flex items-center">
+                            <a className="text-2xl text-white font-bold text-center">Pomodoro Fiend</a>
+                        </div>
+                    </div>
+                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-10 gap-4 justify-between items-center">
+                        <div className="flex-1 flex items-center justify-center">
+                            <Trophy className="text-2xl text-[#ffb31b] font-bold w-20 h-20"></Trophy>
+                        </div>
+                        <div className="h-12 flex items-center">
+                            <a className="text-2xl text-white font-bold text-center">Focus Fortress</a>
+                        </div>
+                    </div>
+                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-10 gap-4 justify-between items-center">
+                        <div className="flex-1 flex items-center justify-center">
+                            <Trophy className="text-2xl text-[#ffb31b] font-bold w-20 h-20"></Trophy>
+                        </div>
+                        <div className="h-12 flex items-center">
+                            <a className="text-2xl text-white font-bold text-center">Goated</a>
+                        </div>
+                    </div>
+                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-10 gap-4 justify-between items-center">
+                        <div className="flex-1 flex items-center justify-center">
+                            <Trophy className="text-2xl text-[#ffb31b] font-bold w-20 h-20"></Trophy>
+                        </div>
+                        <div className="h-12 flex items-center">
+                            <a className="text-center text-2xl text-white font-bold">Zen Master</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
