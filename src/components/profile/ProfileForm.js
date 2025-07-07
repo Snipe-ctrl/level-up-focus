@@ -66,7 +66,7 @@ export default function ProfileForm() {
                                     <User className="text-gray-400 h-5 w-5"/>
                                     <a className="ml-1 text-md text-gray-400 font-bold">Friends</a>
                                 </div>
-                                <a className="text-gray-100 font-bold text-2xl left-0">28</a>
+                                <a className="text-gray-100 font-bold text-2xl left-0">{profile?.friend_count + 1}</a>
                             </div>
                         </div>
                     </div>
@@ -93,15 +93,15 @@ export default function ProfileForm() {
                 <div className="flex justify-between w-[70%] h-full mt-2">
                     <div className="flex flex-col bg-neutral-800 w-[30%] h-fit rounded-lg p-4">
                         <a className="text-2xl text-gray-400 font-bold">Total Pomodoros</a>
-                        <a className="text-2xl text-white font-medium">189</a>
+                        <a className="text-2xl text-white font-medium">{profile?.total_pomodoros}</a>
                     </div>
                     <div className="flex flex-col bg-neutral-800 w-[30%] h-fit rounded-lg p-4">
                         <a className="text-2xl text-gray-400 font-bold">Total Focus Time</a>
-                        <a className="text-2xl text-white font-medium">108H 22M</a>
+                        <a className="text-2xl text-white font-medium">{profile?.total_focus_time + 1}</a>
                     </div>
                     <div className="flex flex-col bg-neutral-800 w-[30%] h-fit rounded-lg p-4">
                         <a className="text-2xl text-gray-400 font-bold">Total XP</a>
-                        <a className="text-2xl text-white font-medium">21,890</a>
+                        <a className="text-2xl text-white font-medium">{profile?.xp}</a>
                     </div>
                 </div>
                 <div className="flex justify-start items-center gap-1 w-[70%] mt-8">
@@ -109,7 +109,7 @@ export default function ProfileForm() {
                     <a className="text-white text-2xl font-bold">Achievements</a>
                 </div>
                 <div className="grid grid-cols-6 gap-2 w-[70%] h-full mt-2 mb-16">
-                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-10 gap-4 justify-between items-center">
+                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-5 gap-8 justify-between items-center">
                         <div className="flex-1 flex items-center justify-center">
                             <Trophy className="text-2xl text-[#ffb31b] font-bold w-20 h-20"></Trophy>
                         </div>
@@ -117,7 +117,7 @@ export default function ProfileForm() {
                             <a className="text-2xl text-white font-bold text-center">First Crack</a>
                         </div>
                     </div>
-                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-10 gap-4 justify-between items-center">
+                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-5 gap-8 justify-between items-center">
                         <div className="flex-1 flex items-center justify-center">
                             <Trophy className="text-2xl text-[#ffb31b] font-bold w-20 h-20"></Trophy>
                         </div>
@@ -125,7 +125,7 @@ export default function ProfileForm() {
                             <a className="text-2xl text-white font-bold text-center">Ripe Tomato</a>
                         </div>
                     </div>
-                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-10 gap-4 justify-between items-center">
+                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-5 gap-8 justify-between items-center">
                         <div className="flex-1 flex items-center justify-center">
                             <Trophy className="text-2xl text-[#ffb31b] font-bold w-20 h-20"></Trophy>
                         </div>
@@ -133,7 +133,7 @@ export default function ProfileForm() {
                             <a className="text-2xl text-white font-bold text-center">Pomodoro Fiend</a>
                         </div>
                     </div>
-                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-10 gap-4 justify-between items-center">
+                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-5 gap-8 justify-between items-center">
                         <div className="flex-1 flex items-center justify-center">
                             <Trophy className="text-2xl text-[#ffb31b] font-bold w-20 h-20"></Trophy>
                         </div>
@@ -141,7 +141,7 @@ export default function ProfileForm() {
                             <a className="text-2xl text-white font-bold text-center">Focus Fortress</a>
                         </div>
                     </div>
-                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-10 gap-4 justify-between items-center">
+                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-5 gap-8 justify-between items-center">
                         <div className="flex-1 flex items-center justify-center">
                             <Trophy className="text-2xl text-[#ffb31b] font-bold w-20 h-20"></Trophy>
                         </div>
@@ -149,7 +149,7 @@ export default function ProfileForm() {
                             <a className="text-2xl text-white font-bold text-center">Goated</a>
                         </div>
                     </div>
-                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-10 gap-4 justify-between items-center">
+                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-5 gap-8 justify-between items-center">
                         <div className="flex-1 flex items-center justify-center">
                             <Trophy className="text-2xl text-[#ffb31b] font-bold w-20 h-20"></Trophy>
                         </div>
