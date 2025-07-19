@@ -19,6 +19,20 @@ export default function ProfileForm() {
         });
     };
 
+    const convertSecondsToHoursMinutes = (seconds) => {
+        if (!seconds || seconds < 0) return '00:00';
+
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        
+        if (hours > 0 && minutes > 0) {
+            return `${hours}h ${minutes}m`;
+        } else if (hours > 0) {
+            return `${hours}h`;
+        } else {
+            return `${minutes}m`;
+        }
+    }
 
     if (!user) {
         return null;
@@ -97,7 +111,7 @@ export default function ProfileForm() {
                     </div>
                     <div className="flex flex-col bg-neutral-800 w-[30%] h-fit rounded-lg p-4">
                         <a className="text-2xl text-gray-400 font-bold">Total Focus Time</a>
-                        <a className="text-2xl text-white font-medium">{profile?.total_focus_time + 1}</a>
+                        <a className="text-2xl text-white font-medium">{convertSecondsToHoursMinutes(profile?.user_focus_time)}</a>
                     </div>
                     <div className="flex flex-col bg-neutral-800 w-[30%] h-fit rounded-lg p-4">
                         <a className="text-2xl text-gray-400 font-bold">Total XP</a>

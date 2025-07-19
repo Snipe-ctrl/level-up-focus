@@ -25,6 +25,8 @@ export function useTimer(initialSettings) {
             xp: newTotalXp,
             pomos: profile.pomos + 1,
             level: shouldLevelUp ? newLevel : profile.level,
+            total_pomodoros: profile.total_pomodoros + 1,
+            user_focus_time: profile.user_focus_time + timerSettings.workDuration * 60
         });
     };
 
