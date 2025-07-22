@@ -64,10 +64,29 @@ export default function ThemeModal({ onClose, isOpen }) {
         }
     };
 
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                onClose();
+            } else if (e.key === 'Enter' && e.target.tagName !== 'INPUT') {
+                onClose();
+            }
+        };
+
+        if (isOpen) {
+            document.addEventListener('keydown', handleKeyDown);
+        }
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isOpen, onClose])
+
     return (
         <>
             <div
                 className='fixed inset-0 bg-black/60 z-20'
+                onClick={onClose}
             ></div>
             <div className="flex fixed items-center justify-center flex-col z-30 bg-neutral-100 p-6 w-2xl rounded-2xl">
                 <div className="flex justify-between flex-col w-full">
