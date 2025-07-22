@@ -69,7 +69,7 @@ export default function ThemeModal({ onClose, isOpen }) {
             <div
                 className='fixed inset-0 bg-black/60 z-20'
             ></div>
-            <div className="flex fixed items-center justify-center flex-col z-30 bg-white/90 p-6 w-2xl rounded-2xl">
+            <div className="flex fixed items-center justify-center flex-col z-30 bg-neutral-100 p-6 w-2xl rounded-2xl">
                 <div className="flex justify-between flex-col w-full">
                     <div className='flex justify-between'>
                         <h2 className='text-lg font-semibold leading-none tracking-tight'>Theme Settings</h2>

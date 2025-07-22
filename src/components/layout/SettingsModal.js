@@ -6,7 +6,13 @@ import { useEffect, useState, useCallback } from 'react';
 
 export default function SettingsModal({ isOpen, onClose, onSave, settings }) {
 
-    const [timerSettings, setTimerSettings] = useState(settings);
+    // *TEMPORARY* using hardcoded settings until the database contains user settings
+    const [timerSettings, setTimerSettings] = useState(settings || {
+        workDuration: 25,
+        breakDuration: 5,
+        longBreakDuration: 15,
+        longBreakInterval: 4
+    });
 
     const handleInputChange = (field, value) => {
 
@@ -47,7 +53,7 @@ export default function SettingsModal({ isOpen, onClose, onSave, settings }) {
                 className='fixed inset-0 bg-black/60 z-20'
                 onClick={onClose}
             ></div>
-            <div className="flex fixed items-center justify-center flex-col z-30 bg-white/90 p-6 max-w-md rounded-2xl">
+            <div className="flex fixed items-center justify-center flex-col z-30 bg-neutral-100 p-6 max-w-md rounded-2xl">
                 <div className="flex justify-between flex-col">
                     <div className='flex justify-between'>
                         <h2 className='text-lg font-semibold leading-none tracking-tight'>Timer Settings</h2>

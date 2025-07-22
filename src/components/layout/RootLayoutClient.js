@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { AuthProvider } from "@/context/AuthContext"
 import { ProfileProvider } from "@/context/ProfileContext";
-import Timer from "../timer/Timer";
-import PlayerCard from "./PlayerCard"
+import GlobalModalRenderer from "./GlobalModalRenderer";
 import Sidebar from "./Sidebar";
+import { ModalProvider } from "@/context/ModalContext";
 
 export default function RootLayoutClient({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -13,11 +13,14 @@ export default function RootLayoutClient({ children }) {
   return (
     <AuthProvider>
       <ProfileProvider>
-        <Sidebar 
-          isOpen={isSidebarOpen} 
-          onClose={() => setIsSidebarOpen(false)} 
-        />
-        {children}
+        <ModalProvider>
+          <Sidebar 
+            isOpen={isSidebarOpen} 
+            onClose={() => setIsSidebarOpen(false)} 
+          />
+          {children}
+          <GlobalModalRenderer />
+        </ModalProvider>
       </ProfileProvider>
     </AuthProvider>
   );

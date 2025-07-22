@@ -64,7 +64,7 @@ export default function SessionCompleteModal({ isOpen, onClose }) {
                         variants={modalVariants}
                     >
                         <div className={
-                            `flex items-center justify-center flex-col bg-white/90 p-10 z-30 max-w-md rounded-2xl
+                            `flex items-center justify-center flex-col bg-neutral-100 p-10 z-30 max-w-md rounded-2xl
                             transition-all duration-300
                             ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}
                             `}>

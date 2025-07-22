@@ -5,7 +5,7 @@
 */
 export function getTotalXPForNextLevel(level) {
     const baseXP = 100;
-    const exponent = 1.5;
+    const exponent = 1.1;
     let totalXP = 0;
   
     for (let i = 1; i <= level; i++) {

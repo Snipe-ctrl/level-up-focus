@@ -2,16 +2,17 @@ import { useState, useEffect } from 'react';
 import { useUserProfile } from "@/context/ProfileContext";
 import { checkLevelUp } from "@/util/xpCalculations";
 import { XP_REWARDS } from "@/constants/timer";
+import { useModal } from '@/context/ModalContext';
 
 export function useTimer(initialSettings) {
     const { profile, updateUserProfile } = useUserProfile();
-    
+    const { openSessionComplete } = useModal();
+
     const [timeLeft, setTimeLeft] = useState(initialSettings.workDuration * 60);
     const [isRunning, setIsRunning] = useState(false);
     const [currentPhase, setCurrentPhase] = useState("work");
     const [completedSessions, setCompletedSessions] = useState(0);
     const [timerSettings, setTimerSettings] = useState(initialSettings);
-    const [isSessionCompleteOpen, setIsSessionCompleteOpen] = useState(false);
 
     const awardXpForSession = async () => {
         if (!profile) return;
@@ -83,7 +84,7 @@ export function useTimer(initialSettings) {
         if (timeLeft === 0) {
             if (currentPhase === "work") {
                 awardXpForSession();
-                setIsSessionCompleteOpen(true);
+                openSessionComplete();
 
                 const newCompletedSessions = completedSessions + 1;
                 setCompletedSessions(newCompletedSessions);
@@ -122,8 +123,6 @@ export function useTimer(initialSettings) {
         completedSessions,
         timerSettings,
         setTimerSettings,
-        isSessionCompleteOpen,
-        setIsSessionCompleteOpen,
         startPause: () => setIsRunning(!isRunning),
         reset: handleReset,
         skip: handleSkip,
