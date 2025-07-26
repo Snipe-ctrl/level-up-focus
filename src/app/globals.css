@@ -62,6 +62,11 @@ html, body {
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
+  pointer-events: none;
+}
+
+.modal-portal > * {
+  pointer-events: auto;
 }
 
 .modal-content {

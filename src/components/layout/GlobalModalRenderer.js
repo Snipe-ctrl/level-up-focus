@@ -42,8 +42,16 @@ export default function GlobalModalRenderer() {
     };
 
     return (
-        <div className="modal-portal">
-            {renderModal()}
-        </div>
+        <>
+            {/* Backdrop overlay */}
+            <div 
+                className="fixed inset-0 bg-black/60 z-20"
+                onClick={closeModal}
+            />
+            {/* Modal container */}
+            <div className="modal-portal">
+                {renderModal()}
+            </div>
+        </>
     );
 }
