@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import AppProviders from "./AppProviders";
 import { AuthProvider } from "@/context/AuthContext"
 import { ProfileProvider } from "@/context/ProfileContext";
 import GlobalModalRenderer from "./GlobalModalRenderer";
@@ -11,17 +12,13 @@ export default function RootLayoutClient({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
-    <AuthProvider>
-      <ProfileProvider>
-        <ModalProvider>
-          <Sidebar 
-            isOpen={isSidebarOpen} 
-            onClose={() => setIsSidebarOpen(false)} 
-          />
-          {children}
-          <GlobalModalRenderer />
-        </ModalProvider>
-      </ProfileProvider>
-    </AuthProvider>
+    <AppProviders >
+      <Sidebar 
+        isOpen={isSidebarOpen} 
+        onClose={() => setIsSidebarOpen(false)} 
+      />
+      {children}
+      <GlobalModalRenderer />
+    </AppProviders>
   );
 }
