@@ -17,9 +17,10 @@ export default function Sidebar({ isOpen }) {
                     <Image 
                         src="/branding/icon-white-arrow.png"
                         alt="Level Up Focus icon"
-                        className="object-cover object-center py-2"
+                        className="object-cover object-center py-2 cursor-pointer"
                         width={50}
                         height={50}
+                        onClick={() => router.push('./timer')}
                     />
                     <div className="hover:bg-white/30 w-full py-3 px-4 transition-all cursor-pointer" onClick={() => router.push('/timer')}>
                         <Timer />
