@@ -2,20 +2,26 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "../services/supabase";
+import { useLoading } from "./LoadingContext";
 
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const { isLoading, startLoading, finishLoading } = useLoading();
 
     useEffect(() => {
         const fetchUser = async () => {
             const { data: { user } } = await supabase.auth.getUser();
             setUser(user);
+            startLoading('auth');
+            startLoading('timer');
+            startLoading('profile-fetch');
             setLoading(false);
+            finishLoading('auth');
         };
-
+        
         fetchUser();
 
         const {  data: authListener } = supabase.auth.onAuthStateChange((event, session) => {

@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { useAuth } from "./AuthContext";
 import { supabase } from "@/services/supabase";
+import { useLoading } from "./LoadingContext";
 
 const ProfileContext = createContext();
 
@@ -23,6 +24,8 @@ export function ProfileProvider({ children }) {
     const [unlockedThemes, setUnlockedThemes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const { isLoading, startLoading, finishLoading } = useLoading();
 
     const updateUserProfile = async (updates) => {
         if (!user || !profile) return { error: "No user profile found" };;
@@ -65,6 +68,7 @@ export function ProfileProvider({ children }) {
                 setProfile(null);
                 localStorage.removeItem('userProfile');
                 setLoading(false);
+                finishLoading('profile-fetch');
                 return;
             }
 
@@ -77,6 +81,7 @@ export function ProfileProvider({ children }) {
                 .single();
 
                 if (error) throw error;
+
                 setProfile(data);
                 localStorage.setItem('userProfile', JSON.stringify(data));
                 await fetchUnlockedThemes(user.id);
@@ -85,6 +90,7 @@ export function ProfileProvider({ children }) {
                 setError(error.message);
             } finally {
                 setLoading(false);
+                finishLoading('profile-fetch');
             }
         }
 

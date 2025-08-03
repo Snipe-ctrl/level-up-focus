@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { supabase } from '@/services/supabase';
+import { useLoading } from '@/context/LoadingContext';
 
 export function useUserProfile() {
     const { user } = useAuth();
