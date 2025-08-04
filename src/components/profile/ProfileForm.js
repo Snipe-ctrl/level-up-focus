@@ -4,6 +4,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useUserProfile } from "@/context/ProfileContext";
 import { calculateXpBarPercentage, getTotalXPForNextLevel } from "@/util/xpCalculations";
 import { Award, User, LineChart, Trophy } from "lucide-react";
+import Image from "next/image";
 
 export default function ProfileForm() {
     const { user } = useAuth();
@@ -123,53 +124,59 @@ export default function ProfileForm() {
                     <a className="text-white text-2xl font-bold">Achievements</a>
                 </div>
                 <div className="grid grid-cols-6 gap-2 w-[70%] h-full mt-2 mb-16">
-                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-5 gap-8 justify-between items-center">
-                        <div className="flex-1 flex items-center justify-center">
-                            <Trophy className="text-2xl text-[#ffb31b] font-bold w-20 h-20"></Trophy>
-                        </div>
-                        <div className="h-12 flex items-center">
-                            <a className="text-2xl text-white font-bold text-center">First Crack</a>
-                        </div>
+                    <div className="flex flex-col h-fit rounded-lg gap-3 justify-between items-center">
+                        <Image
+                            src="/achievement-icons/first-crack.png"
+                            alt="first-crack"
+                            className="object-cover object-center cursor-pointer rounded-xl border-2 border-neutral-300"
+                            width={150}
+                            height={150}
+                        />
                     </div>
-                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-5 gap-8 justify-between items-center">
-                        <div className="flex-1 flex items-center justify-center">
-                            <Trophy className="text-2xl text-[#ffb31b] font-bold w-20 h-20"></Trophy>
-                        </div>
-                        <div className="h-12 flex items-center">
-                            <a className="text-2xl text-white font-bold text-center">Ripe Tomato</a>
-                        </div>
+                    <div className="flex flex-col h-fit rounded-lg gap-3 justify-between items-center">
+                        <Image
+                            src="/achievement-icons/focus-fortress.png"
+                            alt="first-crack"
+                            className="object-cover object-center cursor-pointer rounded-xl border-2 border-neutral-300"
+                            width={150}
+                            height={150}
+                        />
                     </div>
-                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-5 gap-8 justify-between items-center">
-                        <div className="flex-1 flex items-center justify-center">
-                            <Trophy className="text-2xl text-[#ffb31b] font-bold w-20 h-20"></Trophy>
-                        </div>
-                        <div className="h-12 flex items-center">
-                            <a className="text-2xl text-white font-bold text-center">Pomodoro Fiend</a>
-                        </div>
+                    <div className="flex flex-col h-fit rounded-lg gap-3 justify-between items-center">
+                        <Image
+                            src="/achievement-icons/pomodoro-fiend.png"
+                            alt="first-crack"
+                            className="object-cover object-center cursor-pointer rounded-xl border-2 border-neutral-300"
+                            width={150}
+                            height={150}
+                        />
                     </div>
-                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-5 gap-8 justify-between items-center">
-                        <div className="flex-1 flex items-center justify-center">
-                            <Trophy className="text-2xl text-[#ffb31b] font-bold w-20 h-20"></Trophy>
-                        </div>
-                        <div className="h-12 flex items-center">
-                            <a className="text-2xl text-white font-bold text-center">Focus Fortress</a>
-                        </div>
+                    <div className="flex flex-col h-fit rounded-lg gap-3 justify-between items-center">
+                        <Image
+                            src="/achievement-icons/ripe-tomato.png"
+                            alt="first-crack"
+                            className="object-cover object-center cursor-pointer rounded-xl border-2 border-neutral-300"
+                            width={150}
+                            height={150}
+                        />
                     </div>
-                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-5 gap-8 justify-between items-center">
-                        <div className="flex-1 flex items-center justify-center">
-                            <Trophy className="text-2xl text-[#ffb31b] font-bold w-20 h-20"></Trophy>
-                        </div>
-                        <div className="h-12 flex items-center">
-                            <a className="text-2xl text-white font-bold text-center">Goated</a>
-                        </div>
+                    <div className="flex flex-col h-fit rounded-lg gap-3 justify-between items-center">
+                        <Image
+                            src="/achievement-icons/goated.png"
+                            alt="first-crack"
+                            className="object-cover object-center cursor-pointer rounded-xl border-2 border-neutral-300"
+                            width={150}
+                            height={150}
+                        />
                     </div>
-                    <div className="flex flex-col bg-neutral-800 h-fit rounded-lg p-5 gap-8 justify-between items-center">
-                        <div className="flex-1 flex items-center justify-center">
-                            <Trophy className="text-2xl text-[#ffb31b] font-bold w-20 h-20"></Trophy>
-                        </div>
-                        <div className="h-12 flex items-center">
-                            <a className="text-center text-2xl text-white font-bold">Zen Master</a>
-                        </div>
+                    <div className="flex flex-col h-fit rounded-lg gap-3 justify-between items-center">
+                        <Image
+                            src="/achievement-icons/zen-master.png"
+                            alt="first-crack"
+                            className="object-cover object-center cursor-pointer rounded-xl border-2 border-neutral-300"
+                            width={150}
+                            height={150}
+                        />
                     </div>
                 </div>
             </div>
