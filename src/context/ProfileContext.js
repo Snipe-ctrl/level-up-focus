@@ -62,13 +62,26 @@ export function ProfileProvider({ children }) {
             setUnlockedThemes(data);
     }
 
+    const preloadThemeImage = (theme) => {
+        if (theme?.type === 'image') {
+            const img = new Image();
+            img.src = `/${theme.value}`;
+
+            img.onload = () => finishLoading('timer');
+            img.onerror = () => finishLoading('timer');
+
+            return img;
+        } else {
+            finishLoading('timer');
+        }
+    };
+
     useEffect(() => {
         async function fetchUserProfile() {
             if (!user) {
                 setProfile(null);
                 localStorage.removeItem('userProfile');
                 setLoading(false);
-                finishLoading('profile-fetch');
                 return;
             }
 
@@ -85,6 +98,7 @@ export function ProfileProvider({ children }) {
                 setProfile(data);
                 localStorage.setItem('userProfile', JSON.stringify(data));
                 await fetchUnlockedThemes(user.id);
+                preloadThemeImage(data?.theme);
             } catch (error) {
                 console.error('Error fetching user profile:', error);
                 setError(error.message);

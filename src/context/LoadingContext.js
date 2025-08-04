@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const LoadingContext = createContext();
 
@@ -20,6 +20,12 @@ export const LoadingProvider = ({ children }) => {
     };
   
     const isLoading = loadingTasks.size > 0;
+
+    useEffect(() => {
+      startLoading('auth');
+      startLoading('timer');
+      startLoading('profile-fetch');
+    }, []);
   
     return (
       <LoadingContext.Provider value={{ startLoading, finishLoading, isLoading }}>

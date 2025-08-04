@@ -15,9 +15,6 @@ export function AuthProvider({ children }) {
         const fetchUser = async () => {
             const { data: { user } } = await supabase.auth.getUser();
             setUser(user);
-            startLoading('auth');
-            startLoading('timer');
-            startLoading('profile-fetch');
             setLoading(false);
             finishLoading('auth');
         };

@@ -9,7 +9,7 @@ export default function LoadingPage() {
     if (!isLoading) return null;
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center bg-neutral-900">
+        <div className="fixed inset-0 flex items-center justify-center bg-neutral-900 z-100">
             <div className="flex flex-col items-center space-y-6">
                 <LoadingSpinner size="xl" color="white" />
                 <div className="text-center">

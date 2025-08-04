@@ -57,21 +57,6 @@ export default function Timer() {
         }
     }
 
-    useEffect(() => {
-        if (profile?.theme?.type == 'image') {
-
-            const img = new Image();
-            img.src = `/${profile.theme.value}`;
-            img.onload = () => finishLoading('timer');
-            img.onerror = () => finishLoading('timer');
-
-            return () => {
-                img.onload = null;
-                img.onerror = null;
-            }
-        }
-    }, [profile?.theme]);
-
     const { backgroundClass, backgroundImage } = getBackgroundImage();
 
     return (
